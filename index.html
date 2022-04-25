@@ -1,0 +1,1086 @@
+<html>
+  <head>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+   <!-- aframe (Note: had to roll back to version 1.1 to get physics to work!) -->
+   <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+   <!-- event set component for rollovers etc. -->
+   <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+   <!-- add physics! -->
+   <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js">
+   </script>
+   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+    
+   <!-- Glitch Sourch https://scientific-harmonious-distance.glitch.me -->
+   <!-- https://glitch.com/edit/#!/scientific-harmonious-distance -->
+
+   <script>
+       
+      
+
+       
+       //initialization function called on <body> load
+        function init() {
+            let scene = document.getElementById("scene");
+            console.log("scene = " + scene);
+
+            //hide raycaster initially
+            document.getElementById("controller").setAttribute("raycaster", "showLine: false;");
+
+            //hide cursor and show controller if entering VR mode
+            scene.addEventListener('enter-vr', function () {
+                console.log("Entering VR Mode!");
+                document.getElementById("cursor").setAttribute("visible", "false");
+                document.getElementById("controller").setAttribute("raycaster", "showLine: true; far: 40;");
+            });
+
+            //make cursor visible and hide controller in desktop/laptop mode
+            scene.addEventListener('exit-vr', function () {
+                console.log("Exiting VR Mode!");
+                document.getElementById("cursor").setAttribute("visible", "true");
+                document.getElementById("controller").setAttribute("raycaster", "showLine: false;");
+            });
+        }
+
+//var sceneEl = document.querySelector('a-scene');
+//console.log(this.el.sceneEl); 
+
+//Selector
+AFRAME.registerComponent('foo', {
+  init: function () {
+    let el = this.el;
+    var sceneEl = document.querySelector('a-scene');
+    console.log(sceneEl.querySelector(''));
+    console.log(this.el.sceneEl); 
+// <a-box id="redBox" class="clickable" color="red"></a-box> 
+  }
+});
+
+//custom teleporter component
+AFRAME.registerComponent("teleport", {
+            schema: {
+                type: 'string'
+            },
+            init: function () {
+                //variables
+                let el = this.el;
+                let cameraRig = document.getElementById("rig");
+                let newPosition = this.data;
+
+                //event handlers
+                el.addEventListener("click", teleport);
+
+                function teleport() {
+                    console.log("Teleporting...");
+                    cameraRig.setAttribute("position", newPosition);
+                }
+            }
+        });
+
+//Selector
+AFRAME.registerComponent('spawn-can', {
+  init: function () {
+    let el = this.el;
+
+    el.addEventListener("click", spawnCan);
+
+    var sceneEl = document.querySelector('a-scene');
+    sceneEl.querySelector('#sodaCan')
+
+    console.log(sceneEl.querySelector('#sodaCan'));
+    console.log(this.el.sceneEl); 
+  }
+});
+
+
+    AFRAME.registerComponent("spawn-soda", {
+        init: function () {
+            //variables
+            
+            
+            //console.log(this.el.sceneEl); 
+            let el = this.el;
+
+            //event handlers
+            el.addEventListener("click", spawnSoda);
+
+            var sceneEl = document.querySelector('a-scene');
+    sceneEl.querySelector('#sodaCan')
+
+    console.log(sceneEl.querySelector('#sodaCan'));
+
+            function spawnSoda() {
+                
+              sceneEl.querySelector('#sodaCan').setAttribute("dynamic-body", "");
+                console.log("Soda Spawned");
+               
+            }
+
+            
+        }
+    });
+       
+     //Distroy Wall
+  AFRAME.registerComponent("distroy-wall", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", distroyWall);
+              var sceneEl = document.querySelector('a-scene');
+            
+            sceneEl.querySelector('#wallPushSph');
+            sceneEl.querySelector('#dWall');
+            sceneEl.querySelector('#dWall2');
+            sceneEl.querySelector('#dWall3');
+            sceneEl.querySelector('#dWall4');
+            sceneEl.querySelector('#dWall5');
+            sceneEl.querySelector('#dWall6');
+            sceneEl.querySelector('#dWall7');
+            sceneEl.querySelector('#dWall8');
+            sceneEl.querySelector('#dWall9');
+
+            function distroyWall() {
+
+                //el.setAttribute("static-body", "");
+
+                //remove the dynamic-body component so that you can position it.
+                
+                sceneEl.querySelector('#wallPushSph').setAttribute("static-body", "");
+                sceneEl.querySelector('#dWall').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall2').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall3').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall4').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall5').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall6').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall7').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall8').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#dWall9').setAttribute("dynamic-body", "");
+                sceneEl.querySelector('#wallPushSph').setAttribute("dynamic-body", "");
+                
+                console.log("Wall distroyed");
+              //remove event listener; make uninteractivable once found
+            }
+
+            
+        }
+    });
+
+
+    AFRAME.registerComponent("obj-found", {
+        init: function () {
+            let el = this.el;
+
+            //event handlers
+            el.addEventListener("click", objFound);
+
+            function objFound() {
+                console.log("Object Found");
+               // sceneEl.document.querySelector("#can").setAttribute("dynamic-body", "");
+            }
+
+            
+        }
+    });
+
+   //Broom
+    AFRAME.registerComponent("broom-found", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", broomFound);
+
+            function broomFound() {
+
+                el.setAttribute("position", "9.581 .5 16.433");
+                el.setAttribute("rotation", "0 0 0");
+                console.log("Broom found. Relocating.");
+              //remove event listener; make uninteractivable once found
+            }
+
+            
+        }
+    });
+
+  //Soda Can
+  AFRAME.registerComponent("soda-found", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", sodaFound);
+
+            function sodaFound() {
+                
+
+                //el.setAttribute("static-body", "");
+
+                //remove the dynamic-body component so that you can position it.
+                el.removeAttribute("find-soda");
+                el.removeAttribute("dynamic-body");
+                el.setAttribute("position", "9.637 1.062 16.6543");
+                el.setAttribute("rotation", "0 90 0");
+                
+                console.log("Soda found. Relocating.");
+              //remove event listener; make uninteractivable once found
+            }
+
+            
+        }
+    });
+
+   //Ball
+   AFRAME.registerComponent("ball-found", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", ballFound);
+
+            function ballFound() {
+                
+                el.setAttribute("position", "9.650 1.800 16.628");
+                //el.setAttribute("static-body", "");
+                console.log("Ball found. Relocating.");
+              //remove event listener; make uninteractivable once found
+            }
+
+            
+        }
+    });
+
+  //Boot
+   AFRAME.registerComponent("boot-found", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", bootFound);
+
+            function bootFound() {
+                
+                el.setAttribute("position", "9.622 1.733 15.877");
+                el.setAttribute("rotation", "0 0 0");
+                //el.setAttribute("static-body", "");
+                console.log("Boot found. Relocating.");
+              //remove event listener; make uninteractivable once found
+            }
+
+            
+        }
+    });
+
+    //Gas Can
+   AFRAME.registerComponent("gas-found", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", gasFound);
+
+            function gasFound() {
+                
+                el.setAttribute("position", "9.625 0.980 17.355");
+                el.setAttribute("rotation", "0 0 0");
+                //el.setAttribute("static-body", "");
+                console.log("Gas found. Relocating.");
+              //remove event listener; make uninteractivable once found
+            }
+
+            
+        }
+    });
+
+
+
+    //Car Door
+    AFRAME.registerComponent("car-door-tap", {
+        init: function () {
+            let el = this.el;
+
+            el.addEventListener("click", doorTapped);
+
+            function doorTapped() {
+
+                el.setAttribute("rotation", "0 45 0");
+                console.log("Door Tapped");
+              //Need function to rotate back to position on click
+            }
+
+            
+        }
+    });
+
+    
+
+</script>
+
+  </head>
+  <body onload="init()" >
+
+
+    <a-scene id="scene">
+
+     <!--
+      <a-assets>
+        <a-asset-item id="car" src="https://cdn.glitch.global/b2537dee-a300-4294-87df-7359d377811b/car.glb?v=1649857373379"></a-asset-item>
+      </a-assets>
+    -->
+
+    <a-assets>
+        
+      <audio id="pop" src="sound/pop.wav" preload="auto"></audio>
+      <audio id="carSound" src="sound/car.wav" preload="auto"></audio> 
+        
+         <a-mixin id="sodaBtn" event-set__mouseenter="_event: mouseenter; material.color: orange"
+    event-set__mouseleave="_event: mouseleave; material.color: gray"
+    event-set__mousedown="_event: mousedown; material.color: green"
+    spawn-soda></a-mixin>
+        
+    <a-mixin id="fakeBtn" event-set__mouseenter="_event: mouseenter; material.color: orange"
+    event-set__mouseleave="_event: mouseleave; material.color: gray"
+    event-set__mousedown="_event: mousedown; material.color: red"
+    ></a-mixin> 
+        
+        
+       <!-- Trick: use an a-entity for a camera rig -->
+        
+        <!--<a-entity>
+      <!--<a-camera id="rig" position="13.927 1.6 16.473">
+     <!--<a-entity static-body >-->
+      <!--<a-camera id="rig" position="13.927 1 16.473"  >-->
+          <!--<a-cursor id="cursor" color="#e9f0b2" opacity=".5"></a-cursor>
+          <!-- Or <a-entity cursor></a-entity> -->
+          <!-- Add a VR controllwer with the laser-controls component -->
+           <!-- <a-entity id="controller" laser-controls="hand: right" raycaster="showLine: true; far: 40;"></a-entity> -->
+      <!--</a-camera>
+  <!--</a-entity>   -->
+      <img id="brick" src="textures/brick.png">
+      <img id="brick2" src="textures/brick_alt.png">
+      <img id="grass" src="textures/grass.png">
+      <img id="metal" src="textures/metal.png">
+      <img id="metal-w" src="textures/metal-w.png">
+    
+
+    <a-mixin id="place-holder" material="opacity: 0.5"></a-mixin>
+        
+     <a-mixin id="wall-tapped" distroy-wall ></a-mixin>
+        
+    <!-- <a-entity static-body rotation="0 0 0" scale=".5 .5 .5" position="0 0 0" gltf-model="#r"></a-entity> -->
+       
+      
+                
+        
+      <a-asset-item id="car" src="models/car_new.glb"></a-asset-item>
+      
+        
+      <a-asset-item id="car_red" src="models/car_red.glb"></a-asset-item>
+      <a-asset-item id="car_red_fwl" src="models/car_red_fwl.glb"></a-asset-item>
+      <a-asset-item id="car_red_fwr" src="models/car_red_fwr.glb"></a-asset-item>
+      <a-asset-item id="car_red_bwl" src="models/car_red_bwl.glb"></a-asset-item>
+      <a-asset-item id="car_red_bwr" src="models/car_red_bwr.glb"></a-asset-item>
+        
+      <a-asset-item id="station" src="models/station.glb"></a-asset-item>
+      <a-asset-item id="vending" src="models/vending.glb"></a-asset-item>
+        
+      <a-asset-item id="tree" src="models/tree.glb"></a-asset-item>
+      <a-asset-item id="tree2" src="models/tree2.glb"></a-asset-item>
+        
+      <!--<a-asset-item id="broom-model" src="broom.glb"></a-asset-item> -->
+      <!--<a-asset-item id="broom-o" src="broom_o.glb"></a-asset-item> -->
+        
+      <a-asset-item id="broom-model" src="models/broom2.glb"></a-asset-item>
+      <a-asset-item id="broom-o" src="models/broom2_o.glb"></a-asset-item>
+        
+      <a-asset-item id="gasCan-model" src="models/gascan.glb"></a-asset-item>
+      <a-asset-item id="gasCan-o" src="models/gascan_o.glb"></a-asset-item>
+        
+      <a-asset-item id="boot-model" src="models/boot.glb"></a-asset-item>
+      <a-asset-item id="boot-o" src="models/boot_o.glb"></a-asset-item>
+        
+        
+    </a-assets>
+    
+
+       <!-- CAMERA -->
+        <!-- Trick: use a "rig" to position and move camera (and controllers with it). -->
+        <a-entity wasd-controls="enabled: false" id="rig" position="13.927 0 16.473">
+            <!-- Note: wasd-controls are disabled to avoid rig offset glitch with teleporting. -->
+            <a-camera wasd-controls="enabled: false">
+                <a-cursor id="cursor" color="#e9f0b2" opacity=".5"></a-cursor>
+                <!-- Or <a-entity cursor></a-entity> -->
+            </a-camera>
+            <!-- Add a VR controllwer with the laser-controls component -->
+            <a-entity id="controller" laser-controls="hand: right" raycaster="showLine: true; far: 40;"></a-entity>
+        </a-entity>
+          
+        
+        
+     <!-- teleporter vending macine -->
+     <a-circle position="-1.539 .1 -2.803" rotation="-90 0 0" teleport="-1.539  0 -2.803" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>
+        
+     <!-- teleporter station entrance -->
+     <a-circle position="1.084 .1 -7.854" rotation="-90 0 0" teleport="1.084  0 -7.854" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>  
+        
+      <!-- teleporter station 2  -->
+     <a-circle position="0.910 .1 -15.085" rotation="-90 0 0" teleport="0.910  0 -15.085" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>     
+    
+    <!-- teleporter station 3  -->
+     <a-circle position="-8.568 .1 -15.841" rotation="-90 0 0" teleport="-8.568  0 -15.841" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>     
+        
+     <!-- teleporter station closet -->
+     <a-circle position="1.084 .1 -17.558" rotation="-90 0 0" teleport="1.084 .1 -17.558" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>  
+        
+        
+    <!-- teleporter behind tanks -->
+     <a-circle position="10.143 .1 -13.529" rotation="-90 0 0" teleport="10.143 0 -13.529" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>  
+        
+    <!-- teleporter between tanks -->
+     <a-circle position="13.575 .1 -4.233" rotation="-90 0 0" teleport="13.575 0 -4.233" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle> 
+        
+    <!-- teleporter between station and tanks -->
+     <a-circle position="0.129 .1 4.030" rotation="-90 0 0" teleport="0.129 0 4.030" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>       
+        
+    <!-- teleporter driveway -->
+     <a-circle position="6.022 .1 -6.324" rotation="-90 0 0" teleport="6.022 0 -6.324" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>    
+
+        
+     <!-- teleporter behind car -->
+     <a-circle position="-19.410 .1 3.8913.891" rotation="-90 0 0" teleport="-19.410 0 3.891" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>     
+    
+    <!-- teleporter road -->
+     <a-circle position="-7.671 .1 9.572" rotation="-90 0 0" teleport="-7.671 0 9.572" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>   
+    
+    <!-- teleporter road 2 -->
+     <a-circle position="9.314 .1 9.572" rotation="-90 0 0" teleport="9.314 0 9.572" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>   
+        
+    <!-- teleporter start -->
+     <a-circle position="13.585 .1 16.155" rotation="-90 0 0" teleport="13.5854 0 16.155" radius=".25" opacity=".5"
+     color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+     event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+     event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+    </a-circle>   
+
+
+    <!-- teleporter parkinglot -->
+    <a-circle position="-8.529 .1 -2.258" rotation="-90 0 0" teleport="-8.529 0 -2.258" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle>    
+
+        
+    <!-- teleporter parkinglot 2 -->
+    <a-circle position="-15.395 .1 -8.312" rotation="-90 0 0" teleport="-15.395 0 -8.312" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle> 
+        
+        <!-- teleporter lot trees -->
+    <a-circle position="-20.328 .1 -20.231" rotation="-90 0 0" teleport="-20.328 0 -20.231" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle> 
+        
+     <!-- teleporter behind station -->
+    <a-circle position="-10.405 .1 -21.302" rotation="-90 0 0" teleport="-10.405 0 -21.302" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle>    
+        
+    <!-- teleporter behind station 2 -->
+    <a-circle position="1.527 .1 -22.958" rotation="-90 0 0" teleport="1.527 0 -22.958" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle>   
+        
+        
+    <!-- teleporter secret -->
+    <a-circle position="-3.990 1.3 12.291" rotation="180 0 0" teleport="-3.990 0 13.291" radius=".25" opacity=".04"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .04;" mixin="wall-tapped">
+   </a-circle>    
+        
+    <!-- teleporter secret  2-->
+    <a-circle position="-1.780 .1 16.242" rotation="-90 0 0" teleport="-1.780 0 16.242" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle> 
+        
+     <!-- teleporter secret  3-->
+    <a-circle position="-6.693 .1 18.449" rotation="-90 0 0" teleport="-6.693 0 18.449" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle> 
+        
+    <!-- teleporter secret  4-->
+    <a-circle position="5.398 .1 18.908" rotation="-90 0 0" teleport="5.398 0 18.908" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle> 
+        
+   <!-- teleporter secret  exit-->
+    <a-circle position="-4.042 .1 13.840" rotation="-90 0 0" teleport="-3.990 0 11.291" radius=".25" opacity=".5"
+    color="#c33" animation="property: radius; to: .5; dur: 1000; easing:easeOutQuad; loop: true"
+    event-set__mouseenter="_event: mouseenter; material.color: #c00; opacity: .75;"
+    event-set__mouseeleave="_event: mouseleave; material.color: #c33; opacity: .5;">
+   </a-circle>    
+ 
+
+
+      <!-- Cars -->
+        
+        <a-entity position="27.976 0 6.386"  animation="property: position; to: -27.474 0 6.386; loop: true; dur: 5000; easing: linear" sound="src: #carSound; autoplay: true; loop: true">
+        <a-entity static-body rotation="0 -90 0" scale=".5 .5 .5" position="0 0 0" gltf-model="#car_red"></a-entity>
+        <a-entity static-body rotation="0 -90 0" scale=".5 .5 .5" position="-0.735 0.353 0.663" gltf-model="#car_red_fwl" animation="property: rotation; to: 360 -90 0; loop: true; dur: 1000; easing: linear" ></a-entity>
+        <a-entity static-body rotation="0 -90 0" scale=".5 .5 .5" position="1.325 0.353 0.663" gltf-model="#car_red_fwl" animation="property: rotation; to: 360 -90 0; loop: true; dur: 1000; easing: linear" ></a-entity>
+        
+        <a-entity static-body rotation="0 -90 0" scale=".5 .5 .5" position="-0.735 0.353 -0.663" gltf-model="#car_red_fwr" animation="property: rotation; to: 360 -90 0; loop: true; dur: 1000; easing: linear"  ></a-entity>
+        <a-entity static-body rotation="0 -90 0" scale=".5 .5 .5" position="1.325 0.353 -0.663" gltf-model="#car_red_fwr" animation="property: rotation; to: 360 -90 0; loop: true; dur: 1000; easing: linear"  ></a-entity>
+        </a-entity>
+      
+        <!-- Flies -->
+        <!--<a-entity static-body rotation="0 -90 0" scale=".02 .02 .02" position="-4.095 5.489 4.807" gltf-model="#car_red_bwl" animation="property: rotation; to: 360 360 360; loop: true; dur: 400; easing: linear"  ></a-entity>
+        
+        
+        <a-entity static-body rotation="0 0 0" scale=".02 .02 .02" position="-3.793 5.380 4.807" gltf-model="#car_red_bwl" animation="property: rotation; to: -360 360 -360; loop: true; dur: 400; easing: linear"  ></a-entity> -->
+       
+      
+      <!--<a-entity static-body rotation="0 -90 0" scale=".5 .5 .5" position="27.976 0 6.386" gltf-model="#car_red" animation="property: position; to: -27.474 .5 6.386; loop: true; dur: 5000; easing: linear"></a-entity>
+      -->
+        
+        <a-entity static-body rotation="0 90 0" scale=".5 .5 .5" position="-12.420 0 1.420" gltf-model="#car"></a-entity>
+
+        <!-- Station -->
+        <a-entity  rotation="0 0 0" scale=".15 .15 .15" position="-2.725 0.065 -15.30" gltf-model="#station"></a-entity>
+        
+        <!-- Vending machine -->
+        <a-entity  rotation="0 0 0" scale=".15 .15 .15" position="-1.573 -0.058 -5.537" gltf-model="#vending"></a-entity> 
+        
+        <a-box mixin="" static-body color="gray" depth=".1" height="1" width=".8" position="-1.722 .6 -5.337" rotation="-65 0 0" opacity="0"></a-box>
+        <a-box mixin="" static-body color="gray" depth=".1" height="1" width=".8" position="-2.079 .6 -5.337" rotation="0 90 0" opacity="0"></a-box>
+        <a-box mixin="" static-body color="gray" depth=".1" height="1" width=".8" position="-1.358 .6 -5.337" rotation="0 90 0" opacity="0"></a-box>
+        
+        <a-box mixin="" static-body color="gray" depth=".1" height="1" width=".8" position="-1.540 0.152 -5.524" rotation="0 90 0" opacity="0" scale="1.637 0.52438 11.72577"></a-box>
+        
+        
+        
+        
+        
+        
+        
+         <!--Vending Machine-->
+
+    <!--Button-->
+    <a-box mixin="sodaBtn" scale="0.1 0.1 0.1" position="-1.085 1.362 -4.882"  color="gray" ></a-box>
+        
+        <a-box mixin="fakeBtn" scale="0.1 0.1 0.1" position="-1.085 1.162 -4.882"  color="gray" ></a-box>
+        <a-box mixin="fakeBtn" scale="0.1 0.1 0.1" position="-1.085 1.562 -4.882"  color="gray" ></a-box>
+        <a-box mixin="fakeBtn" scale="0.1 0.1 0.1" position="-1.085 1.762 -4.882"  color="gray" ></a-box>
+ 
+    
+
+    
+
+        
+        
+        
+        
+       <!-- <a-box mixin="" color="gray" depth=".5" height="1" width=".6" position="0 0 0" rotation="23 0 0"></a-box>
+        <a-box mixin="" color="gray" depth=".5" height="1" width=".1" position=".3 0 0"></a-box>
+        <a-box mixin="" color="gray" depth=".5" height="1" width=".1" position="-.3 0 0"></a-box>
+        <a-box mixin="" color="gray" depth=".5" height=".4" width=".6" position="0 3 0" rotation="0 0 0"></a-box>-->
+       
+
+   
+        
+   
+
+
+        
+    <!--Soda Can Click Event-->
+    <a-mixin id="find-soda" event-set__mouseenter="_event: mouseenter; material.color: white"
+    event-set__mouseleave="_event: mouseleave; material.color: crimson"
+    event-set__mousedown="_event: mousedown; material.color: green" obj-found soda-found ></a-mixin>
+
+    <!--Broom Click Event-->
+    <a-mixin id="find-broom" event-set__mouseenter="_event: mouseenter; material.color: white; scale: .6 .6 .6"
+    event-set__mouseleave="_event: mouseleave; material.color: yellow; scale: .5 .5 .5"
+    event-set__mousedown="_event: mousedown; material.color: green; scale: .4 .4 .4" obj-found broom-found></a-mixin>
+
+    <!--Ball Click Event-->
+    <a-mixin id="find-ball" event-set__mouseenter="_event: mouseenter; material.color: white"
+    event-set__mouseleave="_event: mouseleave; material.color: #2a5379"
+    event-set__mousedown="_event: mousedown; material.color: green" obj-found ball-found></a-mixin>
+
+    <!--Gas Can Click Event-->
+    <a-mixin id="find-gas" event-set__mouseenter="_event: mouseenter; scale: .45 .45 .45"
+    event-set__mouseleave="_event: mouseleave;  scale: .4 .4 .4"
+    event-set__mousedown="_event: mousedown; scale: .3 .3 .3" obj-found gas-found></a-mixin>
+
+    <!--Boot Click Event-->
+    <a-mixin id="find-boot" event-set__mouseenter="_event: mouseenter; scale: .13 .13 .13"
+    event-set__mouseleave="_event: mouseleave; scale: .12 .12 .12"
+    event-set__mousedown="_event: mousedown; scale: .10 .1 .1" obj-found boot-found></a-mixin>
+
+    <!--Car Door Click Event-->
+    <a-mixin id="car-door" event-set__mouseenter="_event: mouseenter; material.color:#f43b60"
+    event-set__mouseleave="_event: mouseleave; material.color: crimson"
+    event-set__mousedown="_event: mousedown; material.color: #ff6a6a" car-door-tap></a-mixin>
+
+
+    
+     <!-- *Findable Objects* -->
+
+     <!--Soda Can-->
+     <a-entity mixin="find-soda" id="sodaCan" geometry="primitive: cylinder; radius: .05; height: .15"
+          material="color: crimson; shader: flat"
+               rotation=" 0 0 90 "
+          position="-1.745 1.062 -5.437"></a-entity>
+     <!--Broom-->
+     <a-entity mixin="find-broom" id="broom" rotation="0 0 0" scale=".5 .5 .5" position="-1.630 0 -16.950" gltf-model="#broom-model" ></a-entity>
+     <!--<a-box mixin="find-broom" id="broom" color="yellow" depth=".05" height="1.5" width="0.05"   position="-1.630 1.427 -16.950"></a-box>-->
+     <!-- Ball -->
+     <a-sphere mixin="find-ball" id="ball" radius=".1" material="color: #2a5379" position="-4.03481 6.13386 4.31324"></a-sphere>
+     <!-- Gas Can -->
+     <a-entity mixin="find-gas" id="gasCan" rotation="0 -133.3616563946504 0" scale=".4 .4 .4" position="15.4613 0 -8.676" gltf-model="#gasCan-model"></a-entity>   
+     <!--<a-box mixin="find-gas" id="gasCan" color="tomato" depth=".2" height=".5" width="0.4" position="15.4613 0.25403 -8.676"  rotation="0 -133.3616563946504 0" ></a-box>-->
+     <!-- Boot -->
+     <a-entity mixin="find-boot" id="boot" rotation="0 -78 0" scale=".12 .12 .12" position="1.141 1.215 17.78427" gltf-model="#boot-model"></a-entity>   
+     <!--<a-box mixin="find-boot" id="boot" color="brown" depth=".1" height=".3" width="0.3" position="1.141 1.215 17.78427"></a-box>-->
+     <!-- *Placeholder Items* -->
+     
+     <a-text value="Find the Objects" position="9.596 2.854 17.477" rotation="0 90 0" color="#000000"  ></a-text>
+     <a-text value="Assests created by me" scale=".4 .4 .4" position="9.596 1.387 20.341" rotation="0 90 0" color="white"  ></a-text>
+     <a-text value="Sound effects from https://freesound.org/people/qubodup/sounds/147242/" scale=".4 .4 .4" position="9.596 1.087 20.341" rotation="0 90 0" color="white"  ></a-text>
+        
+        
+     <a-box width=".01" position="9.5641 1.69653 16.71308" material="" geometry="" scale="1 2.624 2.26949"></a-box>
+     <a-box width=".01" position="9.5641 0 17.81055" material="color: #000000" geometry="" scale="1.99307 2.624 0.08727"></a-box>
+        <a-box width=".01" position="9.5641 0 15.61555" material="color: #000000" geometry="" scale="1.99307 2.624 0.08727"></a-box>
+     <!-- Soda Can -->
+     <a-cylinder mixin="place-holder" color="crimson" height=".15" radius=".05" position="9.637 1.062 16.654" rotation="0 90 0"></a-cylinder>
+     <!-- Ball -->
+     <a-sphere mixin="place-holder" color="yellow" radius=".1" material="color: #2a5379" position="9.650 1.800 16.628" rotation="0 90 0"></a-sphere>
+     <!-- Gas Can -->
+     <a-entity mixin="place-holder" rotation="0 0 0" scale=".4 .4 .4" position="9.625 0.980 17.355" gltf-model="#gasCan-o" opacity=".5"></a-entity>
+     <!--<a-box mixin="place-holder" color="tomato" depth=".2" height=".5" width="0.4" position="9.625 1.183 15.872" rotation="0 90 0"></a-box>-->
+     <!-- Boot -->
+     <a-entity mixin="place-holder" scale=".12 .12 .12" position="9.622 1.733 15.877" rotation="0 0 0" gltf-model="#boot-o"></a-entity>
+     <!--<a-box mixin="place-holder" color="brown" depth=".1" height=".3" width="0.3" position="9.622 1.733 15.877" rotation="0 90 0"></a-box>-->
+     <!-- Broom -->
+     <a-entity mixin="place-holder" rotation="0 0 0" scale=".5 .5 .5" position="9.581 .5 16.433" gltf-model="#broom-o" opacity=".5"></a-entity>
+     <!--<a-box mixin="place-holder" color="yellow" depth=".05" height="1.5" width="0.05"  position="9.581 1.040 16.345" rotation="0 90 0"></a-box>-->
+     
+    <!-- ********* -->
+
+
+    <!--Open Door Animation-->
+    <!--Note: "Left/Right , Up/Down , Forwards/Back" 
+    <a-entity position="0 0 0">
+    <a-box mixin="car-door"  color="crimson" depth=".1" height="1" width="1" position="-3 1 -6" material="" geometry=""  rotation="0 0 0"></a-box>
+    </a-entity>-->
+
+
+   
+
+    
+    
+    <!-- Streetlight -->
+  <a-entity position="-4 0 4">
+    
+    <a-box src="textures/metal.png" mixin="" color="gray" depth="1" height=".4" width="1" position="0 0 0"></a-box>
+    <a-box src="textures/metal.png" mixin="" color="gray" depth=".4" height="6" width=".4" position="0 3 0"></a-box>
+    <a-box src="textures/metal.png" mixin="" color="gray" depth=".1" height=".3" width=".3" position="0 5.90 .32"></a-box>
+    <a-box src="textures/metal.png" mixin="" color="gray" depth="1.1" height=".4" width=".9" position="0 6 1"></a-box>
+    <a-entity light="type: point; intensity: 1; colour: #fff576" shadow="cast: true" position="0 5.447 1.042" ></a-entity>
+    <a-entity id="light-target" position="0 0 1" ></a-entity>
+    <a-box mixin="" shader="flat" color="#fff576" depth=".7" height=".5" width=".6" position="0 5.90 1"></a-box>
+    </a-entity>
+    <!-- ************ -->
+
+    <!-- Streetlight -->
+  <a-entity position="12 0 12" rotation="0 180 0">
+    <a-box src="textures/metal.png" mixin="" color="gray" depth="1" height=".4" width="1" position="0 0 0"></a-box>
+    <a-box src="textures/metal.png" mixin="" color="gray" depth=".4" height="6" width=".4" position="0 3 0"></a-box>
+    <a-box src="textures/metal.png" mixin="" color="gray" depth=".1" height=".3" width=".3" position="0 5.90 .32"></a-box>
+    <a-box src="textures/metal.png" mixin="" color="gray" depth="1.1" height=".4" width=".9" position="0 6 1"></a-box>
+    <a-entity light="type: point; intensity: 1; colour: #fff576" shadow="cast: true" position="0 5.447 1.042" ></a-entity>
+    <a-entity id="light-target" position="0 0 1" ></a-entity>
+    <a-box mixin="" shader="flat" color="#fff576" depth=".7" height=".5" width=".6" position="0 5.90 1"></a-box>
+    </a-entity>
+    <!-- ************ -->
+
+    <!-- Trees (depth , height , width = width , height, length) -->
+   <a-entity  static-body rotation="0 90 0" scale=".2 .2 .2" position="-19.835 0.00 -13.973" gltf-model="#tree"></a-entity>
+   <a-entity static-body rotation="0 180 0" scale=".17 .3a .17" position="-17.007 0.00 -24.056" gltf-model="#tree"></a-entity>
+        
+   <a-entity static-body rotation="0 90 0" scale=".6 .9 .6" position="-20.584 0.00 -8.405" gltf-model="#tree2"></a-entity>
+   <a-entity static-body rotation="0 180 0" scale=".9 .9 .9" position="-9.804 0.00 -25.460" gltf-model="#tree2"></a-entity>
+    
+
+   <a-entity static-body rotation="0 280 0" scale="1.3 1.3 1.3" position="16.125 0.00 -17.416" gltf-model="#tree2"></a-entity>
+   <a-entity static-body rotation="0 280 0" scale=".9 .9 .9" position="20.873 0.00 15.900" gltf-model="#tree2"></a-entity>
+   <a-entity static-body rotation="0 280 0" scale=".4 .9 .9" position="-17.950 0.00 15.900" gltf-model="#tree2"></a-entity>     
+        
+  <!-- ************ -->    
+        
+  <!-- Parking (depth , height , width = width , height, length) -->
+  <a-box mixin="" shader="flat" color="black" depth="6" height=".01" width="6"  position="0 0 4"></a-box>
+  <a-box mixin="" shader="flat" color="black" depth="18" height=".01" width="8" position="-3.78276 0 -8.5" scale="2.757 1 1.245"></a-box>
+  <!-- ************ -->
+
+  <!-- Road (depth , height , width = width , height, length) -->
+  <a-box mixin="" shader="flat" color="black" depth="6" height=".01" width="50" position="0 0 8" ></a-box> 
+  <a-box mixin="" shader="flat" color="white" depth=".1" height=".01" width="50" position="0 .01 8"></a-box>  
+  <!-- ************ -->
+
+  <!-- Tank (depth , height , width = width , height, length) -->
+  <a-entity  position="10 0 -5">
+    
+    <a-entity static-body position="0 2 0">
+      <a-entity  scale="1.5 1.5 1" position="0 1 0" rotation="270 0 0">
+        <a-sphere src="textures/metal-w.png" color="#266922" radius=".5" position="0 0 .5"></a-sphere>
+        <a-cylinder src="textures/metal-w.png" mixin="" radius=".5" color="#266922"  height="1" width="1"  rotation="90 0 0"></a-cylinder> 
+        </a-entity>
+      <a-sphere src="textures/metal-w.png" color="#266922" radius="1.5" position="0 0 4"></a-sphere>
+      <a-sphere src="textures/metal-w.png" color="#266922" radius="1.5" position="0 0 -4"></a-sphere>
+      <a-box src="textures/metal.png" mixin=""  color="gray" depth=".5" height="3.5" width="3.5" position="0 -1 3" rotation="0 0 0"></a-box>
+      <a-box src="textures/metal.png" mixin=""  color="gray" depth=".5" height="3.5" width="3.5" position="0 -1 -3" rotation="0 0 0"></a-box> 
+      <a-cylinder src="textures/metal-w.png" mixin="" radius="1.5" color="#266922"  height="8" width="8"  rotation="90 0 0"></a-cylinder> 
+    </a-entity>
+
+    <a-entity static-body position="7 2 0" >
+      <a-entity src="textures/metal-w.png" scale="1.5 1.5 1" position="0 1 0" rotation="270 0 0">
+        <a-sphere src="textures/metal-w.png" color="#266922" radius=".5" position="0 0 .5"></a-sphere>
+        <a-cylinder src="textures/metal-w.png" mixin="" radius=".5" color="#266922"  height="1" width="1"  rotation="90 0 0"></a-cylinder> 
+        </a-entity>
+      <a-sphere src="textures/metal-w.png" color="#266922" src="#metal" radius="1.5" position="0 0 4"></a-sphere>
+      <a-sphere src="textures/metal-w.png" color="#266922" radius="1.5" position="0 0 -4"></a-sphere>
+      <a-box  src="textures/metal.png" mixin=""  color="gray" depth=".5" height="3.5" width="3.5" position="0 -1 3" rotation="0 0 0"></a-box>
+      <a-box  src="textures/metal.png" mixin=""  color="gray" depth=".5" height="3.5" width="3.5" position="0 -1 -3" rotation="0 0 0"></a-box> 
+      <a-cylinder src="textures/metal-w.png" mixin="" radius="1.5" color="#266922"  height="8" width="8" rotation="90 0 0"></a-cylinder> 
+    </a-entity>
+  </a-entity>
+   
+  <!-- ************ -->
+  
+<!-- Wall -->
+<!--<a-entity obj-model="obj: #wall"></a-entity>
+</a-scene>-->
+
+  <!-- Wall -->
+  <a-entity id="wall" >
+    <a-entity static-body position="0 0 13" >
+      <a-entity   position="3 0 0" rotation="0 0 0">
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+        <a-box src="#brick" src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+        </a-entity>
+      <a-entity position="2 0 0" rotation="0 0 0">
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+        </a-entity>
+      <a-entity  position="1 0 0" rotation="0 0 0">
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+        </a-entity>
+      </a-entity>
+    
+      <a-entity static-body position="3 0 13" >
+        <a-entity  position="3 0 0" rotation="0 0 0">
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+          </a-entity>
+        <a-entity position="2 0 0" rotation="0 0 0">
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+          </a-entity>
+        <a-entity  position="1 0 0" rotation="0 0 0">
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+          <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+          </a-entity>
+        </a-entity>
+        <a-entity static-body position="6 0 13" >
+          <a-entity  position="3 0 0" rotation="0 0 0">
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+            </a-entity>
+          <a-entity position="2 0 0" rotation="0 0 0">
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+            </a-entity>
+          <a-entity  position="1 0 0" rotation="0 0 0">
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+            <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+            </a-entity>
+          </a-entity>
+    
+          <a-entity static-body position="-3 0 13" >
+            <a-entity  position="3 0 0" rotation="0 0 0">
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+              </a-entity>
+            <a-entity position="2 0 0" rotation="0 0 0">
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+              </a-entity>
+            <a-entity  position="1 0 0" rotation="0 0 0">
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+              <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+              </a-entity>
+            </a-entity>
+      
+      
+          <!--Destrucable ( dynamic-body )-->
+            <a-entity id="wallPushSph" position="-3.9880 .7 12.7" geometry="primitive:box; depth:.4 ; width: 1; height: 2"  material="opacity: 0" >
+            </a-entity>
+             <!--<a-entity static-body position="-1.823 -0.488 16.190" geometry="primitive:sphere; depth:.4 ; width: 1; height: 2"  material="opacity: .2" >
+            </a-entity>-->
+      
+            <a-entity position="-6 0 13" >
+              <a-entity  position="3 0 0" rotation="0 0 0">
+                <a-box src="#brick2" id="dWall" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                <a-box src="#brick2" id="dWall2"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                <a-box src="#brick2" id="dWall3"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                </a-entity>
+              <a-entity position="2 0 0" rotation="0 0 0">
+                <a-box src="#brick2" id="dWall4"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                <a-box src="#brick2" id="dWall5"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                <a-box src="#brick2" id="dWall6"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                </a-entity>
+              <a-entity position="1 0 0" rotation="0 0 0">
+                <a-box src="#brick2" id="dWall7"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                <a-box src="#brick2" id="dWall8"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                <a-box src="#brick2" id="dWall9" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                </a-entity>
+              </a-entity>
+      
+      
+              <a-entity static-body position="-9 0 13" >
+                <a-entity  position="3 0 0" rotation="0 0 0">
+                  <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                  <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                  <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                  </a-entity>
+                <a-entity position="2 0 0" rotation="0 0 0">
+                  <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                  <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                  <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                  </a-entity>
+                <a-entity  position="1 0 0" rotation="0 0 0">
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                  </a-entity>
+                </a-entity>
+    
+          <a-entity static-body position="9 0 16" rotation="0 90 0" >
+            <a-entity  position="3 0 0" rotation="0 0 0">
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+              </a-entity>
+            <a-entity position="2 0 0" rotation="0 0 0">
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+              </a-entity>
+            <a-entity  position="1 0 0" rotation="0 0 0">
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+              <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+              </a-entity>
+            </a-entity>
+    
+            
+    
+            <a-entity static-body position="9 0 19" rotation="0 90 0" >
+              <a-entity  position="3 0 0" rotation="0 0 0">
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                </a-entity>
+              <a-entity position="2 0 0" rotation="0 0 0">
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                <a-box  src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                </a-entity>
+              <a-entity  position="1 0 0" rotation="0 0 0">
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                </a-entity>
+              </a-entity>
+              <a-entity static-body position="9 0 22" rotation="0 90 0" >
+                <a-entity  position="3 0 0" rotation="0 0 0">
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                  </a-entity>
+                <a-entity position="2 0 0" rotation="0 0 0">
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                  </a-entity>
+                <a-entity  position="1 0 0" rotation="0 0 0">
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                  <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                  </a-entity>
+                </a-entity>
+      
+                <a-entity static-body position="-9 0 16" rotation="0 90 0" >
+                  <a-entity  position="3 0 0" rotation="0 0 0">
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                    </a-entity>
+                  <a-entity position="2 0 0" rotation="0 0 0">
+                    <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                    </a-entity>
+                  <a-entity  position="1 0 0" rotation="0 0 0">
+                    <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                    <a-box src="#brick"  mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                    </a-entity>
+                  </a-entity>
+          
+                  <a-entity static-body position="-9 0 19" rotation="0 90 0" >
+                    <a-entity  position="3 0 0" rotation="0 0 0">
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                      </a-entity>
+                    <a-entity position="2 0 0" rotation="0 0 0">
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                      </a-entity>
+                    <a-entity  position="1 0 0" rotation="0 0 0">
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                      <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                      </a-entity>
+                    </a-entity>
+                    <a-entity static-body position="-9 0 22" rotation="0 90 0" >
+                      <a-entity  position="3 0 0" rotation="0 0 0">
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                        </a-entity>
+                      <a-entity position="2 0 0" rotation="0 0 0">
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                        </a-entity>
+                      <a-entity  position="1 0 0" rotation="0 0 0">
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1"></a-box>
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 1 0"></a-box>
+                        <a-box src="#brick" mixin="" color="brown" depth="1" height="1" width="1" position="0 2 0"></a-box>
+                        </a-entity>
+                      </a-entity>
+                    </a-entity>
+
+   
+
+
+      <!--<a-entity environment="preset: forest"></a-entity>-->
+        
+    <!-- Blockade (depth , height , width = width , height, length) -->
+
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="50" position="0 0 21" ></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="60" position="0 4 23" opacity="0.75"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="70" position="0 8 25" opacity="0.50"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="80" position="0 12 27" opacity="0.25"></a-box>
+
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="50" position="-25.295 0 -4.355" rotation="0 90 0" ></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="60" position="-27.295 4 -4.355" rotation="0 90 0" opacity="0.75"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="70" position="-29.295 8 -4.355" rotation="0 90 0" opacity="0.50"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="80" position="-31.295 12 -4.355" rotation="0 90 0" opacity="0.25"></a-box>
+        
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="50" position="0 0 -29.420" ></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="60" position="0 4 -31.420" opacity="0.75"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="70" position="0 8 -33.420" opacity="0.50"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="80" position="0 12 -35.420" opacity="0.25"></a-box>
+        
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="50" position="25.206 0 -4.355" rotation="0 90 0"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="60" position="27.206 4 -4.355" rotation="0 90 0" opacity="0.75"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="70" position="29.206 8 -4.355" rotation="0 90 0" opacity="0.50"></a-box>
+        <a-box mixin="" shader="flat" color="black" depth="1" height="15" width="80" position="31.206 12 -4.355" rotation="0 90 0" opacity="0.25"></a-box>
+        
+        
+        
+      <a-light type="ambient" color="#250861" position="0 5 0"></a-light>
+
+      <a-plane shader="flat" src="#grass" static-body position="0 0 -4" rotation="-90 0 0" width="50" height="50" color="#7BC8A4"></a-plane>
+      
+      <a-sky color="#250861"></a-sky>
+      
+    </a-scene>
+  </body>
+</html>
